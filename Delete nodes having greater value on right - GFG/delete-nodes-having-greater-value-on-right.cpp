@@ -47,21 +47,18 @@ class Solution
 {
     public:
     int mx=INT_MIN;
-    Node* helper(Node* curr){
+    Node *compute(Node *curr)
+    {
+        // your code goes here
         if(curr==NULL)
             return NULL;
-        Node* temp=helper(curr->next);
+        Node* temp=compute(curr->next);
         if(curr->data>=mx){
             mx=curr->data;
             curr->next=temp;
             return curr;
         }
         return temp;
-    }
-    Node *compute(Node *head)
-    {
-        // your code goes here
-        return helper(head);
     }
     
 };
