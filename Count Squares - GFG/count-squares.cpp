@@ -7,8 +7,17 @@ class Solution {
   public:
     int countSquares(int N) {
         // code here
-        int a=ceil(sqrt(N));
-        return a-1;
+        long lo=0, hi=N;
+        while(lo<hi){
+            long mid=(lo+hi)/2, pmid=mid*mid;
+            if(pmid==N)
+                return mid-1;
+            else if(pmid>N)
+                hi=mid;
+            else
+                lo=mid+1;
+        }
+        return lo-1;
     }
 };
 
