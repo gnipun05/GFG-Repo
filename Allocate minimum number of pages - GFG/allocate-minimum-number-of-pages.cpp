@@ -15,25 +15,26 @@ class Solution
     int solve(int *arr, int n, int t){
         long long sum=0, count=1;
         for(int i=0; i<n; i++){
-            if(arr[i]>t)
-                return n+1;
             if(sum+arr[i]>t){
                 count++;
                 sum=0;
             }
             sum+=arr[i];
         }
-        if(sum>t)
-            count++;
         return count;
     }
     int findPages(int arr[], int n, int m) 
     {
         //code here
+        if(n<m)
+            return -1;
         long long sum=0;
-        for(int i=0; i<n; i++)
+        int mx=INT_MIN;
+        for(int i=0; i<n; i++){
             sum+=arr[i];
-        long long lo=0, hi=sum, answer=sum;
+            mx=max(mx, arr[i]);
+        }
+        long long lo=mx, hi=sum, answer=sum;
         while(lo<=hi){
             long long mid=(lo+hi)/2;
             int temp=solve(arr, n, mid);
@@ -45,7 +46,7 @@ class Solution
             else
                 lo=mid+1;
         }
-        return lo==0?-1:lo;
+        return lo;
     }
 };
 
