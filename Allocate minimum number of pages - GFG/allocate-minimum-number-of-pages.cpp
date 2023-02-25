@@ -34,15 +34,12 @@ class Solution
             sum+=arr[i];
             mx=max(mx, arr[i]);
         }
-        long long lo=mx, hi=sum, answer=sum;
-        while(lo<=hi){
+        long long lo=mx, hi=sum;
+        while(lo<hi){
             long long mid=(lo+hi)/2;
             int temp=solve(arr, n, mid);
-            if(temp<=m){
-                hi=mid-1;
-                if(temp==m)
-                    answer=mid;
-            }
+            if(temp<=m)
+                hi=mid;
             else
                 lo=mid+1;
         }
