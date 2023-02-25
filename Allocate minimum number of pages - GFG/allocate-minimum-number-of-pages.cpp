@@ -34,13 +34,13 @@ class Solution
         for(int i=0; i<n; i++)
             sum+=arr[i];
         long long lo=0, hi=sum, answer=sum;
-        while(lo<hi){
+        while(lo<=hi){
             long long mid=(lo+hi)/2;
             int temp=solve(arr, n, mid);
             if(temp<=m){
-                hi=mid;
-                // if(temp==m)
-                //     answer=mid;
+                hi=mid-1;
+                if(temp==m)
+                    answer=mid;
             }
             else
                 lo=mid+1;
