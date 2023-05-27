@@ -9,40 +9,28 @@ using namespace std;
 // } Driver Code Ends
 // User function Template for C++
 
+// this is a vector solution 
+// previous one is the map solution
 class Solution{
 public:
-    int pageFaults(int n, int c, int pages[]){
+    int pageFaults(int N, int C, int pages[]){
         // code here
-        unordered_map<int, int> m;
-        int answer=0;
-        for(int i=0; i<n ;i++){
-            if(!m.count(pages[i])){
-                if(m.size()<c)
-                    m[pages[i]]=i+1;
-                else{
-                    int mn=INT_MAX, key;
-                    for(auto x:m){
-                        if(x.second<mn){
-                            key=x.first;
-                            mn=x.second;
-                        }
-                    }
-                    m.erase(key);
-                    // unordered_map<int, int> temp;
-                    // for(auto x:m){
-                    //     if(x.first!=key)
-                    //         temp[x.first]=x.second;
-                    // }
-                    // m=temp;
-                    m[pages[i]]=i+1;
+        int c=0;
+        vector<int> v;
+        for(int i=0;i<N;i++){
+            auto it=find(v.begin(),v.end(),pages[i]);
+            if(it==v.end()){
+                c++;
+                if(v.size()==C){
+                    v.erase(v.begin());
                 }
-                answer++;
-            }
-            else{
-                m[pages[i]]=i+1;
+                v.push_back(pages[i]);
+            }else{
+                v.erase(it);
+                v.push_back(pages[i]);
             }
         }
-        return answer;
+        return c;
     }
 };
 
