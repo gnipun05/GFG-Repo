@@ -8,25 +8,26 @@ class Solution
 {
     public:
     //Function to return max value that can be put in knapsack of capacity W.
-    vector<vector<int>> dp;
-    int solve(int *wt, int w, int *val, int n){
-        if(w<=0 || n<=0)
-            return 0;
-        if(dp[n][w]!=-1)
-            return dp[n][w];
-        if(wt[n-1]<=w){
-            dp[n][w]=max(solve(wt, w-wt[n-1], val, n-1)+val[n-1], solve(wt, w, val, n-1));
+    int helper(vector<vector<int>> &dp, int W, int wt[], int val[], int n, int i){
+        if(W == 0) return 0;
+        if(i == n) return 0;
+        int take = INT_MIN, notTake = INT_MIN;
+        if(dp[i][W] != -1){
+            return dp[i][W];
         }
-        else{
-            dp[n][w]=solve(wt, w, val, n-1);
+        if(wt[i] <= W){
+            take = helper(dp, W-wt[i], wt, val, n, i+1) + val[i];
         }
-        return dp[n][w];
+        notTake = helper(dp, W, wt, val, n, i+1);
+        return dp[i][W] = max(take, notTake);
     }
-    int knapSack(int w, int wt[], int val[], int n) 
+    
+    int knapSack(int W, int wt[], int val[], int n) 
     { 
-       // Your code here
-       dp.resize(n+1, vector<int> (w+1, -1));
-       return solve(wt, w, val, n);
+        int ans;
+        vector<vector<int>> dp(n+1, vector<int> (W+1, -1));
+        ans = helper(dp, W, wt, val, n, 0);
+        return ans;
     }
 };
 
